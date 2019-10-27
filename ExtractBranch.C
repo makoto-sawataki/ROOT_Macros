@@ -1,4 +1,5 @@
 {
+    // やっていることはTTreeから欲しいBranchをcloneしてるだけ
     #include <TTree.h>
     #include <TFile.h>
     
@@ -8,7 +9,7 @@
     //ifstream fin;
     //fin.open("out.root");
 
-    TFile* fin = new TFile("out.root");
+    TFile* fin = new TFile("sample.root");
     TTree* tree = (TTree*)fin->Get("tree");
 
     Int_t event, nHit;
@@ -22,18 +23,14 @@
     tree->SetBranchAddress("x", &x);
     tree->SetBranchAddress("y", &y);
     tree->SetBranchAddress("z", &z);
-    tree->SetBranchAddress("time", &Rtime);
-    tree->SetBranchAddress("eIn", &eIn);
-    tree->SetBranchAddress("eDep", &eDep);
-    tree->SetBranchAddress("TrackID", &trackID);
+    
     tree->SetBranchAddress("copyNo", &copyNo);
     tree->SetBranchAddress("particle", &particle);
 
-    Int_t tEvent, tnHit;
     int tx, ty, tz;
     double time_detect;
     Double_t teIn, teDep;
-    Int_t ttrackID, tcopyNO, tparticleID;
+    Int_t ttrackID, copyNO, particleID;
 
     
     // make new File 
@@ -41,36 +38,39 @@
     // make TTree
     TTree* t = new TTree("t","output");
     // register the each variable as Branch by TTree::Branch Method
-    t->Branch("event", &tEvent, "tEvent/I");
-    t->Branch("nHit", &tnHit, "tnHit/I");
+    t->Branch("event", &event, "event/I");
+    t->Branch("nHit", &nHit, "nHit/I");
     t->Branch("x", &tx, "tx/I");
     t->Branch("y", &ty, "ty/I");
     t->Branch("z", &tz, "tz/I");
-    t->Branch("time", &time_detect, "time_detect/D");
-    t->Branch("eIn", &teIn, "eIn/D");
-    t->Branch("eDep", &teDep, "eDep/D");
-    t->Branch("trackID", &ttrackID, "trackID");
-    t->Branch("copyNo", &tcopyNO, "copyNO/I");
-    t->Branch("particleID", &tparticleID, "particleID/I");
+    //t->Branch("time", &time_detect, "time_detect/D");
+    //t->Branch("eIn", &teIn, "eIn/D");
+    //t->Branch("eDep", &teDep, "eDep/D");
+    //t->Branch("trackID", &ttrackID, "trackID");
+    t->Branch("copyNo", &copyNo, "copyNo/I");
+    t->Branch("particleID", &particle, "particle/I");
 
     // This is tried and true method about registering TTree
     Int_t n = tree->GetEntries();
-    for (int i = 0; i < n; ++i)
+    for (int i = 0; i < 10; ++i)
     {
         tree->GetEntry(i);
+        std::cout << x << " " << y << " " << z <<std::endl;
         
-        //tEvent = event;
-        //tnHit = tnHit;
+        getchar();
+
+        event;
+        nHit;
         tx = int(x); 
         ty = int(y);
         tz = int(z);
-        //time_detect = Rtime;
-        //teIn = eIn;
-        //teDep = eDep;
-        //ttrackID = trackID;
-        //tcopyNO = copyNo;
-        //tparticleID = particle;
+        std::cout << tx << " " << ty << " " << tz << std::endl;
         
+        getchar();
+    
+        copyNo;
+        particle;
+
         t->Fill();
         
     }
