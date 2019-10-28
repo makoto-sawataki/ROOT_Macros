@@ -6,7 +6,7 @@
 
     // Read the textfile
     ifstream fin;
-    fin.open("20191008_out.txt");                       // you can change the inside contents 
+    fin.open("sample.txt");                       // you can change the inside contents 
 
     // Define variables
     int         event, nHit;
